@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-deployment
+  labels:
+    app: model-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-deployment
+  template:
+    metadata:
+      labels:
+        app: model-deployment
+    spec:
+      containers:
+      - name: model
+        image: mlops_hw_docker_compose_and_k8s-model:1
+        env:
+        - name: RABBIT_MQ_HOST
+          value: rabbitmq
+        - name: RABBITMQ_USER
+          value: rmuser
+        - name: RABBITMQ_PASS
+          value: rmpassword
+        - name: MODEL_QUEUE_NAME
+          value: model_q
+        - name: JOB_QUEUE_NAME
+          value: job_q
+
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: model
+#  labels:
+#    app: model
+#spec:
+#  type: NodePort
+#  ports:
+#  - port: 5000
+#    targetPort: 5000
+#    nodePort: 30001
+#    protocol: TCP
+#    name: api
+#  selector:
+#    app: api-deployment

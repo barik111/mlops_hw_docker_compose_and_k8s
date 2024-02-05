@@ -1,0 +1,9 @@
+.idea
+
+**/*.pth
+**/*.ckpt
+**/*.pt
+**/*.pyc
+
+postgres/
+rabbitmq/
